@@ -2,6 +2,7 @@
 @using HW2OnlineShop
 @using HWShop_ASP.net.Product
 <h1>Куртка</h1>
+<link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
 
 @foreach (var p in products)
 {
@@ -35,6 +36,7 @@
 
 @code {
     IReadOnlyCollection<Product> products;
+    @inject IToastService ToastService;
 
     [Parameter]
     public int Count { get; set; } = 0;
@@ -59,6 +61,7 @@
 
     private void Buy()
     {
+       ToastService.ShowSuccess("Товар добален в корзину!", ":)");
        Basket.Buy("Куртка", Count);
 
     }

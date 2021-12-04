@@ -1,7 +1,9 @@
 ﻿@page "/tent"
+@using Blazored.Toast
 @using HW2OnlineShop
 @using HWShop_ASP.net.Product
 <h1>Палатка</h1>
+<link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
 
 @foreach (var p in products)
 {
@@ -32,6 +34,7 @@
 
 @inject IProductCatalog ProductCatalog
 @inject IBasket Basket
+@inject IToastService ToastService;
 
 
 @inject IProductCatalog ProductCatalog
@@ -62,6 +65,7 @@
 
     private void Buy()
     {
+        ToastService.ShowSuccess("Товар добален в корзину!", ":)");
        Basket.Buy("Палатка", Count);
 
     }

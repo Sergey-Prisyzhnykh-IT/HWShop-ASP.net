@@ -1,7 +1,11 @@
 ﻿@page "/showBasket"
 @using System.Text
 @using System.Collections.Concurrent
+@using Blazored.Toast
+@using Blazored.Toast.Services
+@using Blazored.Toast.Configuration
 <h3>Корзина</h3>
+<link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
 
 @foreach (var b in _basket)
 {
@@ -15,6 +19,7 @@
 </div>
 
 @inject HWShop_ASP.net.Product.IBasket  Basket;
+@inject IToastService ToastService;
 
 @code {
 
@@ -27,6 +32,7 @@
 
     private void Clear()
     {
+        ToastService.ShowSuccess("Корзина очищена!", ":)");
         Basket.Clear();
     }
 }
