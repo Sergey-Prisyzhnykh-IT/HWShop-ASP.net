@@ -1,0 +1,21 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Добро пожаловать в интернет магазин Books</h1>
+<div>Время по гринвичу: @time.ToShortTimeString()</div>
+
+@using HW2OnlineShop.Time
+
+@inject IRealTime RealTime
+
+
+@code {
+    DateTime time;
+
+  protected override void OnInitialized()
+    {
+        time = RealTime.GetRealTime();
+    }
+}
+

@@ -1,0 +1,30 @@
+@page "/jacket"
+@using HW2OnlineShop
+<h1>Куртка</h1>
+
+@foreach (var p in products)
+{
+    if (p.Name == "Куртка")
+    {
+        <div>@p.Name</div>
+        <img src="@p.urlImage" alt="Image" width="700" height="700"/>
+        <div>@p.Price</div>
+    }
+
+                
+}
+
+
+
+@inject IProductCatalog ProductCatalog
+
+@code {
+    IReadOnlyCollection<Product> products;
+    
+    protected override void OnInitialized()
+    {
+
+        products = ProductCatalog.GetProductCatalog();
+
+    }
+}

@@ -1,0 +1,26 @@
+@page "/catalog"
+<h3>Catalog</h3>
+
+@using HW2OnlineShop
+
+@inject IProductCatalog ProductCatalog
+
+@foreach (var p in products)
+{
+    <div>@p.Name</div>
+    <img src="@p.urlImage" alt="Image"/>
+    <div>@p.Price</div>
+                
+}
+
+@code {
+    IReadOnlyCollection<Product> products;
+    
+    protected override void OnInitialized()
+    {
+
+        products = ProductCatalog.GetProductCatalog();
+
+    }
+    
+}
