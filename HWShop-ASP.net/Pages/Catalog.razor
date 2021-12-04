@@ -1,26 +1,32 @@
 @page "/catalog"
 <h3>Catalog</h3>
 
+@using Blazored.Toast.Services
 @using HW2OnlineShop
+@using HWShop_ASP.net.Pages.ProductShow
+@using Blazored.Toast
+@using Blazored.Toast.Services
 
 @inject IProductCatalog ProductCatalog
+@inject IToastService ToastService;
 
 @foreach (var p in products)
 {
     <div>@p.Name</div>
     <img src="@p.urlImage" alt="Image"/>
-    <div>@p.Price</div>
-                
+    <div>@p.Price</div> 
+    <div>
+        <a href="@p.moreDetails">Подробнее</a>
+     </div>   
 }
 
 @code {
     IReadOnlyCollection<Product> products;
-    
+
     protected override void OnInitialized()
     {
-
         products = ProductCatalog.GetProductCatalog();
-
-    }
-    
+    }  
 }
+
+

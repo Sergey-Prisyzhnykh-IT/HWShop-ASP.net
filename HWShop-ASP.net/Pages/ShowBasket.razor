@@ -1,0 +1,32 @@
+﻿@page "/showBasket"
+@using System.Text
+@using System.Collections.Concurrent
+<h3>Корзина</h3>
+
+@foreach (var b in _basket)
+{
+    <div>@b.Key   @b.Value</div>   
+}
+
+<div>
+    <button @onclick="@Clear">
+        Очистить Корзину
+    </button>
+</div>
+
+@inject HWShop_ASP.net.Product.IBasket  Basket;
+
+@code {
+
+    ConcurrentDictionary<string, int> _basket;
+
+    protected override void OnInitialized()
+    {
+        _basket = Basket.ShowBusket();
+    }
+
+    private void Clear()
+    {
+        Basket.Clear();
+    }
+}

@@ -2,6 +2,6 @@
 
 namespace HW2OnlineShop
 {
-    public record class Product(string Name, decimal Price, string urlImage);
+    public record class Product(string Name, decimal Price, string urlImage, string moreDetails);
 
 }

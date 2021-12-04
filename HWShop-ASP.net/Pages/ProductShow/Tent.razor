@@ -1,16 +1,16 @@
-@page "/jacket"
+﻿@page "/tent"
 @using HW2OnlineShop
 @using HWShop_ASP.net.Product
-<h1>Куртка</h1>
+<h1>Палатка</h1>
 
 @foreach (var p in products)
 {
-    if (p.Name == "Куртка")
+    if (p.Name == "Палатка")
     {
         <div>@p.Name</div>
         <img src="@p.urlImage" alt="Image" width="700" height="700"/>
         <div>@p.Price</div>
-    }           
+    }               
 }
 
 <div>
@@ -33,12 +33,15 @@
 @inject IProductCatalog ProductCatalog
 @inject IBasket Basket
 
+
+@inject IProductCatalog ProductCatalog
+
 @code {
     IReadOnlyCollection<Product> products;
 
     [Parameter]
     public int Count { get; set; } = 0;
-
+    
     protected override void OnInitialized()
     {
 
@@ -59,7 +62,7 @@
 
     private void Buy()
     {
-       Basket.Buy("Куртка", Count);
+       Basket.Buy("Палатка", Count);
 
     }
 }

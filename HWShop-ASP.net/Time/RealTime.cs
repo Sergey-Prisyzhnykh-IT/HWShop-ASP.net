@@ -4,9 +4,7 @@
     {
         public DateTime GetRealTime()
         {
-            DateTime dateNow = DateTime.Now;
-
-            return TimeZoneInfo.ConvertTimeToUtc(dateNow);
+            return DateTime.Now;
         }
     }
 }

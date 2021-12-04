@@ -1,17 +1,20 @@
+using Blazored.Toast;
 using HW2OnlineShop;
 using HW2OnlineShop.Time;
 using HWShop_ASP.net.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using HWShop_ASP.net.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddBlazoredToast();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IRealTime, RealTime>();
 builder.Services.AddSingleton<IProductCatalog, ProductCatalog>();
+builder.Services.AddSingleton<IBasket, Basket>();
+
 
 var app = builder.Build();
 
