@@ -5,8 +5,8 @@ namespace HWShop_ASP.net.Product
 {
     public interface IBasket
     {
-        void Buy(string product, int count);
-        ConcurrentDictionary<string, int> ShowBusket();
+        void Buy(HW2OnlineShop.Product product, int count);
+        ConcurrentDictionary<HW2OnlineShop.Product, int> ShowBusket();
         void Clear();
     }
 }

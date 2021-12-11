@@ -4,13 +4,34 @@
 @using Blazored.Toast
 @using Blazored.Toast.Services
 @using Blazored.Toast.Configuration
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+
 <h3>Корзина</h3>
 <link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
 
-@foreach (var b in _basket)
+@foreach (var p in _basket)
 {
-    <div>@b.Key   @b.Value</div>   
+        <div>@p.Key.Name</div>
+    <img src="@p.Key.urlImage" alt="Image"/>
+    <div>@p.Key.Price</div> 
+    <div>
+        <a href="@p.Key.moreDetails">Подробнее</a>
+     </div>
+<div>
+    <button @onclick="AddToBasket">
+        +
+    </button>
+    <span class="@p.Value">
+        @p.Value
+    </span>
+    <button @onclick="@RemoveFromBasket">
+        -
+    </button>
+</div>
 }
+
 
 <div>
     <button @onclick="@Clear">
@@ -18,12 +39,17 @@
     </button>
 </div>
 
+
+
 @inject HWShop_ASP.net.Product.IBasket  Basket;
 @inject IToastService ToastService;
+@inject ProtectedLocalStorage _localStorage
 
 @code {
 
-    ConcurrentDictionary<string, int> _basket;
+    ConcurrentDictionary<HW2OnlineShop.Product, int> _basket;
+
+    public int Count { get; set; } = 0;
 
     protected override void OnInitialized()
     {
@@ -35,4 +61,32 @@
         ToastService.ShowSuccess("Корзина очищена!", ":)");
         Basket.Clear();
     }
+
+    private void AddToBasket()
+    {
+        Count++;
+    }
+
+    private void RemoveFromBasket()
+    {
+        if(Count != 0)
+            Count--;
+    }
+
+    //private async Task SaveProduct()
+    //{
+    //    await _localStorage.SetAsync("product", _basket);
+    //}
+
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //     await base.OnAfterRenderAsync(firstRender);
+    //     if (firstRender)
+    //     {
+    //        var result = await _localStorage.GetAsync<ConcurrentDictionary<HW2OnlineShop.Product, int>>("product");
+    //        _basket = result.Value;
+    //        StateHasChanged();
+    //}
+  
+
 }

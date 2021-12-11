@@ -44,11 +44,13 @@
 
     [Parameter]
     public int Count { get; set; } = 0;
+    Product productName;
     
     protected override void OnInitialized()
     {
 
         products = ProductCatalog.GetProductCatalog();
+        productName = ProductCatalog.GetProduct("Палатка");
 
     }
 
@@ -66,7 +68,7 @@
     private void Buy()
     {
         ToastService.ShowSuccess("Товар добален в корзину!", ":)");
-       Basket.Buy("Палатка", Count);
+       Basket.Buy(productName, Count);
 
     }
 }

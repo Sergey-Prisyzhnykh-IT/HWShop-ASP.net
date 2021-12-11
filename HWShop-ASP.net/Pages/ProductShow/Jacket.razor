@@ -15,13 +15,13 @@
 }
 
 <div>
-    <button @onclick="@AddToCart">
+    <button @onclick="@AddToBasket">
         +
     </button>
     <span class="count">
         @Count
     </span>
-    <button @onclick="@RemoveFromCart">
+    <button @onclick="@RemoveFromBasket">
         -
     </button>
         <button @onclick="@Buy">
@@ -40,20 +40,22 @@
 
     [Parameter]
     public int Count { get; set; } = 0;
+    Product productName;
 
     protected override void OnInitialized()
     {
 
         products = ProductCatalog.GetProductCatalog();
+        productName = ProductCatalog.GetProduct("Куртка");
 
     }
 
-    private void AddToCart()
+    private void AddToBasket()
     {
         Count++;
     }
 
-    private void RemoveFromCart()
+    private void RemoveFromBasket()
     {
         if(Count != 0)
             Count--;
@@ -62,7 +64,7 @@
     private void Buy()
     {
        ToastService.ShowSuccess("Товар добален в корзину!", ":)");
-       Basket.Buy("Куртка", Count);
+       Basket.Buy(productName, Count);
 
     }
 }

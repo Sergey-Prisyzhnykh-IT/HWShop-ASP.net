@@ -1,6 +1,9 @@
 ﻿@page "/t-shirt"
 @using HW2OnlineShop
 @using HWShop_ASP.net.Product
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+
 <h1>Футболка</h1>
 <link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
 
@@ -35,6 +38,7 @@
 @inject IProductCatalog ProductCatalog
 @inject IBasket Basket
 @inject IToastService ToastService;
+@inject ProtectedLocalStorage _localStorage
 
 
 
@@ -44,11 +48,13 @@
     IReadOnlyCollection<Product> products;
     [Parameter]
     public int Count { get; set; } = 0;
-    
+    Product productName;
+
     protected override void OnInitialized()
     {
 
         products = ProductCatalog.GetProductCatalog();
+        productName = ProductCatalog.GetProduct("Футболка"); 
 
     }
 
@@ -66,7 +72,7 @@
     private void Buy()
     {
         ToastService.ShowSuccess("Товар добален в корзину!", ":)");
-       Basket.Buy("Футболка", Count);
-
+       Basket.Buy(productName, Count);
     }
+
 }

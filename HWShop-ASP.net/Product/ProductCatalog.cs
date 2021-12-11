@@ -28,7 +28,14 @@ namespace HW2OnlineShop
                 return _products.Select(it => it with { Price = it.Price * 1.5m }).ToList();
             else
                 return _products;
+        }
 
+        public Product GetProduct(string productName) 
+        {
+            foreach (var product in _products)  
+                if (product.Name == productName)
+                    return product;
+            return null;
         }
     }
 }
