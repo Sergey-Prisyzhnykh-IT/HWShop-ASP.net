@@ -79,25 +79,23 @@
         return Basket.GetProductCount(name);
     }
 
-    //private async Task SaveProduct()
-    //{
-    //    await _localStorage.SetAsync("product", _basket);
-    //}
+   // private async Task SavePerson()
+   // {
+   //     await _localStorage.SetAsync("basket",_basket);
+   // }
 
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //     await base.OnAfterRenderAsync(firstRender);
-    //     if (firstRender)
-    //     {
-    //        var result = await _localStorage.GetAsync<ConcurrentDictionary<HW2OnlineShop.Product, int>>("product");
-    //        _basket = result.Value;
-    //        StateHasChanged();
-    //}
-
-    //private void UpdateCount(string name)
-    //{
-    //    Count = Basket.GetProductCount(name);
-    //}
-  
+   //protected override async Task OnAfterRenderAsync(bool firstRender)
+   // {
+   //      await base.OnAfterRenderAsync(firstRender);
+   //      if (firstRender)
+   //      {
+   //         var result = await _localStorage.GetAsync<ConcurrentDictionary<HW2OnlineShop.Product, int>>("basket");
+   //         if (_basket != null)
+   //         {
+   //             _basket = result.Value;
+   //         }          
+   //         StateHasChanged();
+   //      }
+   // }
 
 }
