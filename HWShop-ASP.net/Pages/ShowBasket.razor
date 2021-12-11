@@ -13,20 +13,21 @@
 
 @foreach (var p in _basket)
 {
-        <div>@p.Key.Name</div>
+    <div>@p.Key.Name</div>
     <img src="@p.Key.urlImage" alt="Image"/>
     <div>@p.Key.Price</div> 
     <div>
         <a href="@p.Key.moreDetails">Подробнее</a>
      </div>
+
 <div>
-    <button @onclick="AddToBasket">
+    <button @onclick="@(() => AddToBasket(p.Key.Name))" >
         +
     </button>
-    <span class="@p.Value">
-        @p.Value
+    <span class="count">
+       @HowCountProduct(p.Key.Name)
     </span>
-    <button @onclick="@RemoveFromBasket">
+    <button @onclick="@(() => RemoveFromBasket(p.Key.Name))">
         -
     </button>
 </div>
@@ -49,8 +50,6 @@
 
     ConcurrentDictionary<HW2OnlineShop.Product, int> _basket;
 
-    public int Count { get; set; } = 0;
-
     protected override void OnInitialized()
     {
         _basket = Basket.ShowBusket();
@@ -62,15 +61,22 @@
         Basket.Clear();
     }
 
-    private void AddToBasket()
+    private void AddToBasket(string name)
     {
-        Count++;
+        Basket.AddProduct(name);
+        HowCountProduct(name);
     }
 
-    private void RemoveFromBasket()
+    private void RemoveFromBasket(string name)
     {
-        if(Count != 0)
-            Count--;
+        Basket.DeleteProduct(name);
+        HowCountProduct(name);
+    }
+
+    private int HowCountProduct(string name)
+    {
+        var temp = Basket.GetProductCount(name);
+        return Basket.GetProductCount(name);
     }
 
     //private async Task SaveProduct()
@@ -86,6 +92,11 @@
     //        var result = await _localStorage.GetAsync<ConcurrentDictionary<HW2OnlineShop.Product, int>>("product");
     //        _basket = result.Value;
     //        StateHasChanged();
+    //}
+
+    //private void UpdateCount(string name)
+    //{
+    //    Count = Basket.GetProductCount(name);
     //}
   
 

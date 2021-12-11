@@ -23,5 +23,36 @@ namespace HWShop_ASP.net.Product
         {
             _products.Clear();
         }
+
+
+        public int GetProductCount(string productName)
+        {
+            foreach (var product in _products)
+                if (product.Key.Name == productName)
+                    return product.Value;
+            return 0;
+        }
+
+        public void AddProduct(string productName)
+        {
+            foreach (var product in _products)
+                if (product.Key.Name == productName) 
+                {
+                    var tempCountProduct = product.Value;
+                    tempCountProduct++;
+                    _products.TryUpdate(product.Key, tempCountProduct, product.Value);
+                }                  
+        }
+
+        public void DeleteProduct(string productName)
+        {
+            foreach (var product in _products)
+                if (product.Key.Name == productName)
+                {
+                    var tempCountProduct = product.Value;
+                    tempCountProduct--;
+                    _products.TryUpdate(product.Key, tempCountProduct, product.Value);
+                }
+        }
     }
 }
