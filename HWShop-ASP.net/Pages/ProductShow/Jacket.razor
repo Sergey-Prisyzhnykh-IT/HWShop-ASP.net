@@ -1,6 +1,10 @@
 @page "/jacket"
 @using HW2OnlineShop
 @using HWShop_ASP.net.Product
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using System.Collections.Concurrent
+
+
 <h1>Куртка</h1>
 <link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
 
@@ -33,6 +37,7 @@
 
 @inject IProductCatalog ProductCatalog
 @inject IBasket Basket
+@inject ProtectedLocalStorage _localStorage
 
 @code {
     IReadOnlyCollection<Product> products;
@@ -65,6 +70,13 @@
     {
        ToastService.ShowSuccess("Товар добален в корзину!", ":)");
        Basket.Buy(productName, Count);
-
+        SavePerson(productName.Name, Count);
     }
+
+    private void SavePerson(string name,int count )
+    {
+        Basket.AddLaastShop(name,count);
+        _localStorage.SetAsync("basket",Basket.GetLastProduct());
+    }
+
 }

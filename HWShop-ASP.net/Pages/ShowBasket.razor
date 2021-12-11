@@ -4,7 +4,7 @@
 @using Blazored.Toast
 @using Blazored.Toast.Services
 @using Blazored.Toast.Configuration
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using HW2OnlineShop
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 
 
@@ -33,6 +33,21 @@
 </div>
 }
 
+@if (_basketLast != null)
+{
+    <div>Прошлые заказы</div>
+
+    foreach (var bl in _basketLast)
+    {
+        var temp = products.First(x => x.Name == bl.Key);
+        <div>@temp.Name</div>
+        <img src="@temp.urlImage" alt="Image"/>
+        <div>@temp.Price</div>
+        <div><a href="@temp.moreDetails">Подробнее</a></div>
+        <div>@bl.Value</div>
+    }
+}
+
 
 <div>
     <button @onclick="@Clear">
@@ -45,14 +60,20 @@
 @inject HWShop_ASP.net.Product.IBasket  Basket;
 @inject IToastService ToastService;
 @inject ProtectedLocalStorage _localStorage
+@inject IProductCatalog ProductCatalog
 
 @code {
 
     ConcurrentDictionary<HW2OnlineShop.Product, int> _basket;
+    ConcurrentDictionary<string, int> _basketLast;
+    IReadOnlyCollection<HW2OnlineShop.Product> products;
+
 
     protected override void OnInitialized()
     {
         _basket = Basket.ShowBusket();
+        products = ProductCatalog.GetProductCatalog();
+
     }
 
     private void Clear()
@@ -78,24 +99,25 @@
         var temp = Basket.GetProductCount(name);
         return Basket.GetProductCount(name);
     }
+    /// <summary>
+    /// По не понятным причинам не хочет работать если добовлять продукт, работает только со стандартными типами
+    /// накостылил так
+    /// </summary>
+    /// <param name="firstRender"></param>
+    /// <returns></returns>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            var result = await _localStorage.GetAsync<ConcurrentDictionary<string, int>>("basket");
+            if (result.Success)
+            {
+                _basketLast = result.Value;
+                StateHasChanged();
+            }          
 
-   // private async Task SavePerson()
-   // {
-   //     await _localStorage.SetAsync("basket",_basket);
-   // }
-
-   //protected override async Task OnAfterRenderAsync(bool firstRender)
-   // {
-   //      await base.OnAfterRenderAsync(firstRender);
-   //      if (firstRender)
-   //      {
-   //         var result = await _localStorage.GetAsync<ConcurrentDictionary<HW2OnlineShop.Product, int>>("basket");
-   //         if (_basket != null)
-   //         {
-   //             _basket = result.Value;
-   //         }          
-   //         StateHasChanged();
-   //      }
-   // }
+         }
+    }
 
 }

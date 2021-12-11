@@ -2,6 +2,7 @@
 @using HW2OnlineShop
 @using HWShop_ASP.net.Product
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using System.Collections.Concurrent
 
 
 <h1>Футболка</h1>
@@ -43,6 +44,7 @@
 
 
 @inject IProductCatalog ProductCatalog
+@inject ProtectedLocalStorage _localStorage
 
 @code {
     IReadOnlyCollection<Product> products;
@@ -71,8 +73,15 @@
 
     private void Buy()
     {
-        ToastService.ShowSuccess("Товар добален в корзину!", ":)");
+       ToastService.ShowSuccess("Товар добален в корзину!", ":)");
        Basket.Buy(productName, Count);
+       SavePerson(productName.Name, Count);
+    }
+
+    private void SavePerson(string name,int count )
+    {
+         Basket.AddLaastShop(name,count);
+        _localStorage.SetAsync("basket",Basket.GetLastProduct());
     }
 
 }
