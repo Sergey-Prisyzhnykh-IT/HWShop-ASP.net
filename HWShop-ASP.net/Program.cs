@@ -3,8 +3,10 @@ using HW2OnlineShop;
 using HW2OnlineShop.Time;
 using HWShop_ASP.net.Data;
 using HWShop_ASP.net.Product;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var dbPath = "myapp.db";
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -14,7 +16,8 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IRealTime, RealTime>();
 builder.Services.AddSingleton<IProductCatalog, ProductCatalog>();
 builder.Services.AddSingleton<IBasket, Basket>();
-
+builder.Services.AddDbContext<AppDbContext>(
+   options => options.UseSqlite($"Data Source={dbPath}"));
 
 var app = builder.Build();
 

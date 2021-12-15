@@ -1,0 +1,42 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+@page "/AddProductForm"
+
+<h3>AddProductForm</h3>
+
+<EditForm Model="_model" OnValidSubmit="ProcessValidForm">
+  <DataAnnotationsValidator/>
+
+  ID: <InputText @bind-Value="_model.Id"/>
+  Пароль: <InputText @bind-Value="_model.Name" />
+  Пароль: <InputText @bind-Value="_model.Price" />
+  Пароль: <InputText @bind-Value="_model.UrlImage" />
+  Пароль: <InputText @bind-Value="_model.MoreDetails" />
+
+    <br/> <input type="submit" value="Войти">
+  <ValidationSummary/>
+  </EditForm>
+
+@code {
+    private AddDateBase _model = new();
+    private void ProcessValidForm()
+    {
+        var Id = Convert.ToInt32(_model.Id);
+        var price = Convert.ToDecimal(_model.Price);
+        var product = new HW2OnlineShop.Product(Id,_model.Name,price,_model.UrlImage,_model.MoreDetails );
+
+    }
+
+  private class AddDateBase
+  {
+     [Required]
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Price { get; set; }
+        public string UrlImage { get; set; }
+        public string MoreDetails { get; set; }
+  }
+
+
+
+}

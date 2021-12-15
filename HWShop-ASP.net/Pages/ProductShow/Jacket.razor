@@ -42,8 +42,7 @@
 @code {
     IReadOnlyCollection<Product> products;
     @inject IToastService ToastService;
-
-    [Parameter]
+    
     public int Count { get; set; } = 0;
     Product productName;
 
@@ -68,7 +67,7 @@
 
     private void Buy()
     {
-       ToastService.ShowSuccess("Товар добален в корзину!", ":)");
+       //ToastService.ShowSuccess("Товар добален в корзину!", ":)");
        Basket.Buy(productName, Count);
         SavePerson(productName.Name, Count);
     }
