@@ -18,7 +18,7 @@
 @inject IToastService ToastService;
 <EditForm Model="_model" OnValidSubmit="ProcessValidForm">
   <DataAnnotationsValidator/>
-  Стоимость до: <InputText @bind-Value="_model.Price" />
+  РЎС‚РѕРёРјРѕСЃС‚СЊ РґРѕ: <InputText @bind-Value="_model.Price" />
     <br/> <input type="submit" value="Filter">
   <ValidationSummary/>
   </EditForm>
@@ -34,7 +34,7 @@
         <img src="@p.urlImage" alt="Image"/>
         <div>@p.Price</div> 
         <div>
-            <a href="@p.moreDetails">Подробнее</a>
+            <a href="@p.moreDetails">РџРѕРґСЂРѕР±РЅРµРµ</a>
          </div>   
     }
 
@@ -44,7 +44,7 @@
         <img src="@p.urlImage" width="200" height="200" alt="Image"/>
         <div>@p.Price</div> 
         <div>
-            <a href="@p.moreDetails">Подробнее</a>
+            <a href="@p.moreDetails">РџРѕРґСЂРѕР±РЅРµРµ</a>
          </div>   
     }
 }else
@@ -55,7 +55,7 @@
         <img src="@p.urlImage" width="200" height="200" alt="Image"/>
         <div>@p.Price</div> 
         <div>
-            <a href="@p.moreDetails">Подробнее</a>
+            <a href="@p.moreDetails">РџРѕРґСЂРѕР±РЅРµРµ</a>
          </div>   
     }
     
