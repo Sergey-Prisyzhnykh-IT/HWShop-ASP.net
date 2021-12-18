@@ -14,7 +14,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazoredToast();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IRealTime, RealTime>();
-builder.Services.AddSingleton<IProductCatalog, ProductCatalog>();
+builder.Services.AddScoped<IProductCatalog, ProductCatalog>();
 builder.Services.AddSingleton<IBasket, Basket>();
 builder.Services.AddDbContext<AppDbContext>(
    options => options.UseSqlite($"Data Source={dbPath}"));

@@ -28,16 +28,6 @@
 
 @if (!filterCheck)
 {
-     @foreach (var p in products)
-    {
-        <div>@p.Name</div>
-        <img src="@p.urlImage" alt="Image"/>
-        <div>@p.Price</div> 
-        <div>
-            <a href="@p.moreDetails">Подробнее</a>
-         </div>   
-    }
-
     @foreach (var p in productsDB)
     {
         <div>@p.Name</div>
@@ -64,7 +54,6 @@
 
 @code {
     private Filter _model = new();
-    IReadOnlyCollection<Product> products;
     IReadOnlyCollection<Product> productsDB;
     List<Product> productsFilter  = new List<Product>();
     bool filterCheck = false;
@@ -78,14 +67,6 @@
     {
         var price = Convert.ToDecimal(CheckSymbol(_model.Price));
         filterCheck = true;
-        foreach (var pr in products)
-        {
-            if (pr.Price < price)
-            {
-                productsFilter.Add(pr);
-            }
-        }
-
         foreach (var pr in productsDB)
         {
             if (pr.Price < price)
@@ -107,12 +88,7 @@
 
     protected override void OnInitialized()
     {
-        products = ProductCatalog.GetProductCatalog();
-        productsDB = Db.ProductDB.ToList();
-        //foreach (var bd in Db.ProductDB.OrderBy(b => b.Id))
-        //{
-        //    productsDB = bd.Name
-        //}
+        productsDB = ProductCatalog.GetProductCatalog();
     } 
   private class Filter
   {

@@ -32,11 +32,7 @@
         var Id = Convert.ToInt32(_model.Id);
         var price = Convert.ToDecimal(CheckSymbol(_model.Price));
         var product = new HW2OnlineShop.Product(Id,_model.Name,price,_model.UrlImage,_model.MoreDetails );
-        Db.ProductDB.Add(product);
-        Db.SaveChanges();
-
-
-        //ProductCatalog.AddDBProduct(product);
+        ProductCatalog.AddDBProduct(product);
     }
 
     private string CheckSymbol(string price)

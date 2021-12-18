@@ -9,10 +9,10 @@ namespace HW2OnlineShop
         IRealTime _time;
         AppDbContext db;
 
-        public ProductCatalog(IRealTime time/*, AppDbContext appDbContext*/)
+        public ProductCatalog(IRealTime time, AppDbContext appDbContext)
         {
             _time = time;
-            //db = appDbContext;
+            db = appDbContext;
         }
 
         private readonly IReadOnlyCollection<Product> _products = new Product[]
@@ -28,10 +28,12 @@ namespace HW2OnlineShop
 
         public IReadOnlyCollection<Product> GetProductCatalog()
         {
-            if (_time.GetRealTime().DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday)
-                return _products.Select(it => it with { Price = it.Price * 1.5m }).ToList();
-            else
-                return _products;
+
+            return db.ProductDB.ToList();
+            //if (_time.GetRealTime().DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday)
+            //    return _products.Select(it => it with { Price = it.Price * 1.5m }).ToList();
+            //else
+            //    return _products;
         }
 
         public Product GetProduct(string productName)
