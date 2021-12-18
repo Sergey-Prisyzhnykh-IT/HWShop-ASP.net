@@ -3,6 +3,8 @@
 
 @inject AppDbContext Db;
 
+
+
 @page "/catalog"
 <h3>Catalog</h3>
 
@@ -14,30 +16,94 @@
 
 @inject IProductCatalog ProductCatalog
 @inject IToastService ToastService;
+<EditForm Model="_model" OnValidSubmit="ProcessValidForm">
+  <DataAnnotationsValidator/>
+  Стоимость до: <InputText @bind-Value="_model.Price" />
+    <br/> <input type="submit" value="Filter">
+  <ValidationSummary/>
+  </EditForm>
 
-@foreach (var p in products)
+  <button class="btn btn-primary" @onclick="ClearFilter">Clear</button>
+
+
+@if (!filterCheck)
 {
-    <div>@p.Name</div>
-    <img src="@p.urlImage" alt="Image"/>
-    <div>@p.Price</div> 
-    <div>
-        <a href="@p.moreDetails">Подробнее</a>
-     </div>   
+     @foreach (var p in products)
+    {
+        <div>@p.Name</div>
+        <img src="@p.urlImage" alt="Image"/>
+        <div>@p.Price</div> 
+        <div>
+            <a href="@p.moreDetails">Подробнее</a>
+         </div>   
+    }
+
+    @foreach (var p in productsDB)
+    {
+        <div>@p.Name</div>
+        <img src="@p.urlImage" width="200" height="200" alt="Image"/>
+        <div>@p.Price</div> 
+        <div>
+            <a href="@p.moreDetails">Подробнее</a>
+         </div>   
+    }
+}else
+{
+    @foreach (var p in productsFilter)
+    {
+        <div>@p.Name</div>
+        <img src="@p.urlImage" width="200" height="200" alt="Image"/>
+        <div>@p.Price</div> 
+        <div>
+            <a href="@p.moreDetails">Подробнее</a>
+         </div>   
+    }
+    
 }
 
-@foreach (var p in productsDB)
-{
-    <div>@p.Name</div>
-    <img src="@p.urlImage" width="200" height="200" alt="Image"/>
-    <div>@p.Price</div> 
-    <div>
-        <a href="@p.moreDetails">Подробнее</a>
-     </div>   
-}
 
 @code {
+    private Filter _model = new();
     IReadOnlyCollection<Product> products;
     IReadOnlyCollection<Product> productsDB;
+    List<Product> productsFilter  = new List<Product>();
+    bool filterCheck = false;
+
+    private void ClearFilter()
+    {
+        filterCheck = false;
+    }
+
+    private void ProcessValidForm()
+    {
+        var price = Convert.ToDecimal(CheckSymbol(_model.Price));
+        filterCheck = true;
+        foreach (var pr in products)
+        {
+            if (pr.Price < price)
+            {
+                productsFilter.Add(pr);
+            }
+        }
+
+        foreach (var pr in productsDB)
+        {
+            if (pr.Price < price)
+            {
+                productsFilter.Add(pr);
+            }
+        }
+    }
+
+    private string CheckSymbol(string price)
+    {
+        var checkSymbol = price.IndexOf(".");
+        if (checkSymbol != -1)
+        {
+            price = price.Replace(".",",");
+        }
+        return price;
+    }
 
     protected override void OnInitialized()
     {
@@ -48,6 +114,10 @@
         //    productsDB = bd.Name
         //}
     } 
+  private class Filter
+  {
+        public string Price { get; set; }
+  }
 }
 
 
