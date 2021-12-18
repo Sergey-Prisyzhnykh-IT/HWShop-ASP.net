@@ -1,3 +1,8 @@
+@using HWShop_ASP.net.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject AppDbContext Db;
+
 @page "/catalog"
 <h3>Catalog</h3>
 
@@ -20,13 +25,29 @@
      </div>   
 }
 
+@foreach (var p in productsDB)
+{
+    <div>@p.Name</div>
+    <img src="@p.urlImage" width="200" height="200" alt="Image"/>
+    <div>@p.Price</div> 
+    <div>
+        <a href="@p.moreDetails">Подробнее</a>
+     </div>   
+}
+
 @code {
     IReadOnlyCollection<Product> products;
+    IReadOnlyCollection<Product> productsDB;
 
     protected override void OnInitialized()
     {
         products = ProductCatalog.GetProductCatalog();
-    }  
+        productsDB = Db.ProductDB.ToList();
+        //foreach (var bd in Db.ProductDB.OrderBy(b => b.Id))
+        //{
+        //    productsDB = bd.Name
+        //}
+    } 
 }
 
 

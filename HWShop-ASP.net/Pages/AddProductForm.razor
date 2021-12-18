@@ -1,4 +1,10 @@
 ﻿@using System.ComponentModel.DataAnnotations
+@using HW2OnlineShop
+@using HWShop_ASP.net.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject AppDbContext Db;
+@inject IProductCatalog ProductCatalog;
 
 @page "/AddProductForm"
 
@@ -8,23 +14,39 @@
   <DataAnnotationsValidator/>
 
   ID: <InputText @bind-Value="_model.Id"/>
-  Пароль: <InputText @bind-Value="_model.Name" />
-  Пароль: <InputText @bind-Value="_model.Price" />
-  Пароль: <InputText @bind-Value="_model.UrlImage" />
-  Пароль: <InputText @bind-Value="_model.MoreDetails" />
+  Название: <InputText @bind-Value="_model.Name" />
+  Цена: <InputText @bind-Value="_model.Price" />
+  Ссылка на картинку: <InputText @bind-Value="_model.UrlImage" />
+  ссылка на полную стринцу товара: <InputText @bind-Value="_model.MoreDetails" />
 
-    <br/> <input type="submit" value="Войти">
+    <br/> <input type="submit" value="записать в Базу данных">
   <ValidationSummary/>
   </EditForm>
+
+
 
 @code {
     private AddDateBase _model = new();
     private void ProcessValidForm()
     {
         var Id = Convert.ToInt32(_model.Id);
-        var price = Convert.ToDecimal(_model.Price);
+        var price = Convert.ToDecimal(CheckSymbol(_model.Price));
         var product = new HW2OnlineShop.Product(Id,_model.Name,price,_model.UrlImage,_model.MoreDetails );
+        Db.ProductDB.Add(product);
+        Db.SaveChanges();
 
+
+        //ProductCatalog.AddDBProduct(product);
+    }
+
+    private string CheckSymbol(string price)
+    {
+        var checkSymbol = price.IndexOf(".");
+        if (checkSymbol != -1)
+        {
+            price = price.Replace(".",",");
+        }
+        return price;
     }
 
   private class AddDateBase
