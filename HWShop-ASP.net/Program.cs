@@ -1,3 +1,4 @@
+using BlazorApp.MiddleWare;
 using Blazored.Toast;
 using HW2OnlineShop;
 using HW2OnlineShop.Time;
@@ -28,6 +29,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseMiddleware<RequestLogger>();
+app.UseMiddleware<ResponseLogger>();
+app.Use(CheckBrowser.CheckerBrowser);
 
 app.UseHttpsRedirection();
 
