@@ -5,7 +5,7 @@ namespace BlazorApp.MiddleWare;
 
 public static class CheckBrowser
 {
-    private static readonly List<string> correctBrowser = new List<string>() {"Opera"};
+    private static readonly List<string> correctBrowser = new List<string>() {"Edge"};
 
     public static async Task CheckerBrowser(HttpContext context, RequestDelegate next)
     {
